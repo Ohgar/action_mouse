@@ -1,0 +1,10 @@
+## Title: ActionMouse
+## Version: 1.0
+## Author: OHGAR but mostly ChatGPT
+## Interface: 100207
+
+## SavedVariables: actionMouseSettings
+
+Menu.lua
+Frame.xml
+Frame.lua 

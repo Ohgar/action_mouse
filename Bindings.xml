@@ -1,0 +1,5 @@
+<Bindings>
+	<Binding name="Toggle Action Mode" category="Action Mouse">
+		ToggleActionMode()
+	</Binding>
+</Bindings>
