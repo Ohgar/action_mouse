@@ -7,6 +7,8 @@ ActionMouse.isFullCon = false
 ActionMouse.isSomeCon = false
 ActionMouse.isAutoCon = false
 
+reticleSize = 17
+
 function ActionMouse.updateControlVariables()
     ActionMouse.isClickCon = actionMouseSettings.isClickCon
     ActionMouse.isFullCon = actionMouseSettings.isFullCon
@@ -26,11 +28,12 @@ loadSettingsFrame:SetScript("OnEvent", function(self, event)
     ActionMouse.updateControlVariables()
 end)
 
-ActionMouse.isActionMode = false -- Used to prevent right click stopping mouselook
+-- Used to prevent right click stopping mouselook
+ActionMouse.isActionMode = false 
 
 local reticleButton = CreateFrame("Button", "ClickButton", UIParent, "SecureActionButtonTemplate")
 
--- When the player enters the game after character select
+-- PLAYER ENTERING WORLD
 local enterWorldFrame = CreateFrame("Frame")
 enterWorldFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 enterWorldFrame:SetScript("OnEvent", function(self, event, ...)
@@ -88,14 +91,14 @@ function onUpdate() -- Called every frame
     end
 end
 
--- Workaround for right click causing MouselookStop()
+-- rightClickWorkaround()
 function rightClickWorkaround()
     if ActionMouse.isActionMode and not IsMouselooking() then
         MouselookStart()
     end
 end
 
--- Stops action mode when key UI is opened
+-- uiPanelCheck()
 function uiPanelCheck()
     if ActionMouse.isAutoCon then
         if getAllUIPanels() and ActionMouse.isActionMode then
@@ -113,7 +116,7 @@ function uiPanelCheck()
     end
 end
 
--- Returns if any key UI is on screen
+-- getAllUIPanels()
 function getAllUIPanels()
     if (GetUIPanel("left") or GetUIPanel("right") or GetUIPanel("center")) then
         return true
@@ -122,18 +125,20 @@ function getAllUIPanels()
     end
 end
 
+-- createClickReticle()
 function createClickReticle(xPos, yPos)
     -- If the reticleButton already exists, remove its current position
     if reticleButton then
         reticleButton:ClearAllPoints()
     end
 
-    reticleButton:SetSize(15,15)
+    reticleButton:SetSize(reticleSize,reticleSize)
     reticleButton:SetPoint("CENTER", UIParent, "CENTER", xPos, yPos)
     reticleButton:SetNormalTexture("Interface\\AddOns\\ActionMouse\\action_mouse_reticle.png")
     reticleButton:SetScript("OnClick", MouselookStart)
 end
 
+-- createCursorReticle()
 function createCursorReticle(xPos, yPos)
     -- If the reticleButton already exists, remove its current position
     if reticleButton then
@@ -148,12 +153,13 @@ function createCursorReticle(xPos, yPos)
     local cursorX = (xPos / uiScale) - uiCenterX
     local cursorY = (yPos / uiScale) - uiCenterY
 
-    reticleButton:SetSize(25,25)
+    reticleButton:SetSize(reticleSize,reticleSize)
     reticleButton:SetPoint("CENTER", UIParent, "CENTER", cursorX, cursorY)
     reticleButton:SetNormalTexture("Interface\\AddOns\\ActionMouse\\action_mouse_reticle.png")
     reticleButton:Show()
 end
 
+-- clearReticle()
 function clearReticle()
     if reticleButton then
         reticleButton:ClearAllPoints()

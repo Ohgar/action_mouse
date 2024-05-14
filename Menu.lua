@@ -11,14 +11,14 @@ menuTitle:SetText("/actionmouse")
 -- Create a table to store the checkboxes
 local checkBoxes = {}
 
--- Function to uncheck all checkboxes
+-- unCheckAll()
 local function uncheckAll()
     for _, checkBox in pairs(checkBoxes) do
         checkBox:SetChecked(false)
     end
 end
 
--- Function to create a description
+-- createDescription()
 local function createDescription(text, xPos, yPos)
     local descriptionFrame = CreateFrame("Frame", "ActionMouseDescription", menuFrame)
     descriptionFrame:SetSize(200, 50) -- Set the size of the frame
@@ -29,7 +29,7 @@ local function createDescription(text, xPos, yPos)
     descriptionFrame.text:SetText(text)
 end
 
--- Function to create a checkbox
+-- createCheckbox()
 local function createCheckbox(text, xPos, yPos, index)
     local checkBoxFrame = CreateFrame("CheckButton", "ActionMouseCheckBox" .. index, menuFrame, "ChatConfigCheckButtonTemplate")
     checkBoxFrame:SetPoint("TOPLEFT", menuTitle, "BOTTOMLEFT", xPos, yPos)
@@ -55,9 +55,9 @@ end
 
 -- Initialize actionMouseSettings if it doesn't exist
 actionMouseSettings = actionMouseSettings or {selectedCheckbox = 1}
-actionMouseSettings.sliders = actionMouseSettings.sliders or {x = 0, y = 150}
+actionMouseSettings.sliders = actionMouseSettings.sliders or {x = 0, y = 130}
 
--- Function to create a slider
+-- createSlider()
 local function createSlider(name, xPos, yPos, minVal, maxVal, step)
     local slider = CreateFrame("Slider", name, menuFrame, "OptionsSliderTemplate")
     slider:SetPoint("TOPLEFT", menuTitle, "BOTTOMLEFT", xPos, yPos)
@@ -91,7 +91,7 @@ local function createSlider(name, xPos, yPos, minVal, maxVal, step)
     return slider
 end
 
--- Function to create a reload button
+-- createReloadButton()
 local function createReloadButton(xPos, yPos)
     local reloadButton = CreateFrame("Button", "ReloadUIButton", menuFrame, "UIPanelButtonTemplate")
     reloadButton:SetPoint("TOPLEFT", menuTitle, "BOTTOMLEFT", xPos, yPos)
@@ -102,7 +102,7 @@ local function createReloadButton(xPos, yPos)
     end)
 end
 
--- Create menu items
+-- MENU ITEMS
 createCheckbox("Use Click Reticle (default)", -30, -30, 1)
 local clickSliderX = createSlider("Reticle X", 250, -60, -200, 200, 1)
 local clickSliderY = createSlider("Reticle Y", 450, -60, -200, 200, 1)
@@ -115,10 +115,9 @@ createCheckbox("Some Control (Keybind)", -30, -210, 3)
 createDescription("Good if you care about cursor position but want easier access to UI.\nSet reticle to the cursor's position.\nMouselook ends when key UI is shown.\nDoes not work for all UI.\nSet keybind in Options>Keybindings>Action Mouse.", 0, -230)
 
 createCheckbox("Auto", -30, -300, 4)
-createDescription("Mouselook will always be on except when key UI is shown.\nNo reticle is used.\nOnly use this if you do not care about cursor position.", 0, -320)
+createDescription("Mouselook will always be on except when key UI is shown.\nNo reticle is used.\nGreat if you don't need the cursor in a specific position.", 0, -320)
 
--- Create the reload button
-createReloadButton(200, -400) -- Adjust the position as needed
+createReloadButton(200, -400)
 createDescription("Reload the UI to apply any changes.", 165, -440)
 
 -- Load the player's preference
